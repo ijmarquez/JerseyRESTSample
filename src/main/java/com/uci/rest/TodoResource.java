@@ -1,5 +1,7 @@
 package com.uci.rest;
 
+import com.uci.rest.model.ItemList;
+import com.uci.rest.model.MainList;
 import com.uci.rest.model.Todo;
 import com.uci.rest.service.TodoService;
 
@@ -22,8 +24,8 @@ public class TodoResource {
     @Produces( { MediaType.APPLICATION_JSON }) //This provides only JSON responses
     public Response getTodoById(
             @PathParam("generalName") String generalName){
-        //invokes the DB method which will fetch a todo_list item object by id
-        List<Todo> todoList = TodoService.getTodoById(generalName);
+
+        List<ItemList> todoList = TodoService.getTodoById(generalName);
 
         //Respond with a 404 if there is no such todo_list item for the id provided
         if(todoList == null || todoList.isEmpty()) {
@@ -31,7 +33,7 @@ public class TodoResource {
         }
 
         //Respond with a 200 OK if you have a todo_list_item object to return as response
-        return Response.ok().build();
+        return Response.ok(todoList).build();
     }
 
     //This method represents an endpoint with the URL /todos and a GET request.
@@ -39,10 +41,10 @@ public class TodoResource {
     @GET
     @Produces( { MediaType.APPLICATION_JSON })
     public Response getAllTodos() {
-        List<Todo> todoList = TodoService.getAllTodos();
+        List<MainList> todoList = TodoService.getAllTodos();
 
         if(todoList == null || todoList.isEmpty()) {
-
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         return Response.ok(todoList).build();

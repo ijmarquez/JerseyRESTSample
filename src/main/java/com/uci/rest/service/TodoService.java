@@ -2,6 +2,8 @@ package com.uci.rest.service;
 
 import com.uci.rest.db.DatabaseConnector;
 import com.uci.rest.db.DatabaseUtils;
+import com.uci.rest.model.ItemList;
+import com.uci.rest.model.MainList;
 import com.uci.rest.model.Todo;
 
 import java.sql.Connection;
@@ -21,8 +23,8 @@ public class TodoService {
     private final static String SINGLE_ITEM_INFO = "SELECT * FROM `MainProduct`,`Product`WHERE MainProduct.ID = Product.ID && MainProduct.generalName = \"";
 
     // use for displaying item detail
-    public static List<Todo> getTodoById(String generalName) {
-        List<Todo> todos = new ArrayList<Todo>();
+    public static List<ItemList> getTodoById(String generalName) {
+        List<ItemList> todos = new ArrayList<ItemList>();
 
         //Get a new connection object before going forward with the JDBC invocation.
         Connection connection = DatabaseConnector.getConnection();
@@ -31,12 +33,14 @@ public class TodoService {
         if (resultSet != null) {
             try {
                 while (resultSet.next()) {
-                    Todo todo = new Todo();
+                    ItemList todo = new ItemList();
 
                     todo.setProductID(resultSet.getString("ID"));
                     todo.setGeneralName(resultSet.getString("generalName"));
                     todo.setLocation(resultSet.getString("Location"));
-                    todo.setDisplayName(resultSet.getString("Display Name"));
+                    todo.setItemName(resultSet.getString("Display Name"));
+                    todo.setDescription(resultSet.getString("description"));
+                    todo.setCost(resultSet.getString("cost"));
                     todos.add(todo);
                 }
             } catch (SQLException e) {
@@ -80,8 +84,8 @@ public class TodoService {
     }
 
     // use for displaying all items in homepage
-    public static List<Todo> getAllTodos() {
-        List<Todo> todos = new ArrayList<Todo>();
+    public static List<MainList> getAllTodos() {
+        List<MainList> todos = new ArrayList<MainList>();
 
         Connection connection = DatabaseConnector.getConnection();
         ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_PRODUCTS_QUERY);
@@ -89,7 +93,7 @@ public class TodoService {
         if (resultSet != null) {
             try {
                 while (resultSet.next()) {
-                    Todo todo = new Todo();
+                    MainList todo = new MainList();
 
                     todo.setProductID(resultSet.getString("ID"));
                     todo.setGeneralName(resultSet.getString("generalName"));

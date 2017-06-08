@@ -14,6 +14,7 @@ public class Todo {
     private String displayName;
     private String generalName;
     private String cost;
+    private String description;
 
     public void setGeneralName(String generalName) { this.generalName = generalName; }
     public String getGeneralName() { return  generalName; }
@@ -46,6 +47,13 @@ public class Todo {
         this.displayName = displayName;
     }
     public String getDisplayName() { return displayName; }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getDescription() {
+        return description;
+    }
 }
 
 
