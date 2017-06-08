@@ -5,6 +5,7 @@ package com.uci.rest.model;
  */
 public class Customer {
 
+    int id;
     String firstName;
     String lastName;
     String emailAddress;
@@ -22,13 +23,14 @@ public class Customer {
     String shipAddress;
     String shipCity;
     String shipState;
-    String shipZipCode;
+    int shipZipCode;
 
     String deliveryType;
+    String itemPurchase;
 
-
+    public void setId(int id) { this.id = id;}
     public void setFirstName(String firstName) { this.firstName = firstName; }
-    public void setLastName(String lastName) { this.firstName = lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
     public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
@@ -44,11 +46,12 @@ public class Customer {
     public void setShipAddress(String shipAddress) { this.shipAddress = shipAddress; }
     public void setShipCity(String shipCity) { this.shipCity = shipCity; }
     public void setShipState(String shipState) { this.shipState = shipState; }
-    public void setShipZipCode(String shipZipCode) { this.shipZipCode = shipZipCode; }
+    public void setShipZipCode(int shipZipCode) { this.shipZipCode = shipZipCode; }
 
-    public void setDeliveryType(String shipAddress) { this.shipAddress = shipAddress; }
+    public void setDeliveryType(String deliveryType) { this.deliveryType = deliveryType; }
+    public void setItemPurchase(String itemPurchase) { this.itemPurchase = itemPurchase; }
 
-
+    public int getId() { return this.id; }
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
     public String getEmailAddress() { return emailAddress; }
@@ -66,7 +69,8 @@ public class Customer {
     public String getShipAddress() { return shipAddress; }
     public String getShipCity() { return shipCity; }
     public String getShipState() { return shipState; }
-    public String getShipZipCode() { return shipZipCode; }
+    public int getShipZipCode() { return shipZipCode; }
 
     public String getDeliveryType() { return deliveryType; }
+    public String getItemPurchase() { return itemPurchase; }
 }
