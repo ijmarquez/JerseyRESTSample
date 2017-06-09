@@ -10,12 +10,9 @@ import static com.uci.rest.db.DatabaseConfig.*;
 public class DatabaseConnector {
 
 
-    private DatabaseConnector() {
-
-    }
+    private DatabaseConnector() {    }
 
     public static Connection getConnection() {
-
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -30,6 +27,4 @@ public class DatabaseConnector {
 
         return null;
     }
-
-
 }

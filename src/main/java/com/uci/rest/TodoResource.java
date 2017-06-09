@@ -53,24 +53,6 @@ public class TodoResource {
     }
     //END of GET all items section
 
-    //This method represents an endpoint with the URL /todos and a POST request.
-    // Since there is no @PathParam mentioned, the /todos as a relative path and a POST request will invoke this method.
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON}) //This method accepts a request of the JSON type
-    public Response addTodo(Customer todo) {
-
-        //The todo object here is automatically constructed from the json request. Jersey is so cool!
-        if(TodoService.AddNewCustomer(todo)) {
-            return Response.ok().entity("TODO Added Successfully").build();
-        }
-
-        // Return an Internal Server error because something wrong happened. This should never be executed
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-
-
-    }
-
-//    Similar to the method above.
     @POST
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED}) //This method accepts form parameters.
     //If you were to send a POST through a form submit, this method would be called.
@@ -91,6 +73,10 @@ public class TodoResource {
                             @FormParam("shipCity") String shipCity,
                             @FormParam("shipState") String shipState,
                             @FormParam("shipZipCode") String shipZipCode,
+                            @FormParam("itemName") String itemName,
+                            @FormParam("itemSize") String itemSize,
+                            @FormParam("quantity") String quantity,
+                            @FormParam("unitPrice") String unitPrice,
                             @FormParam("total") String total){
         Customer todo = new Customer();
 
@@ -113,21 +99,15 @@ public class TodoResource {
         todo.setShipState(shipState);
         todo.setShipZipCode(Integer.parseInt(shipZipCode));
 
-        todo.setItemPurchase(firstName+lastName);
+        todo.setItemPurchase(itemName);
+
+        todo.setItemSize(itemSize);
+        todo.setQuantity(Integer.parseInt(quantity));
+        todo.setUnitPrice(Double.parseDouble(unitPrice));
         todo.setTotal(Double.parseDouble(total));
 
         System.out.println(todo);
 
-//        if(todo != null) {
-//            return  Response.ok().entity("firstName: "+ todo.getFirstName() + "\n lastName: " + todo.getLastName() +
-//                    "\n emailAddress: " + todo.getEmailAddress() + "\n setPhoneNumber: "+ todo.getPhoneNumber() +
-//                    "\n setCcType: " + todo.getCcType() + "\n creditCardNumber: " + todo.getCcNumber() +
-//                    "\n billAddress: "+ todo.getBillAddress() + "\n billCity: " + todo.getBillCity() +
-//                    "\n billState: "+ todo.getBillState() + "\n billZipCode: " + String.valueOf(todo.getBillZipCode()) +
-//                    "\n shipAddress: "+ todo.getShipAddress() + "\n shipCity: " + todo.getShipCity() +
-//                    "\n shipState: "+ todo.getShipState() + "\n shipZipCode: " + String.valueOf(todo.getShipZipCode()) +
-//                    "\n itemPurchase: "+ todo.getItemPurchase() + "\n total: " + String.valueOf(todo.getTotal())).build();
-//        }
         if(TodoService.AddNewCustomer(todo)) {
             java.net.URI location = null;
             try {
@@ -136,8 +116,6 @@ public class TodoResource {
                 e.printStackTrace();
             }
             return Response.temporaryRedirect(location).build();
-//            return Response.ok().entity("TODO Added Successfully").build();
-//            return Response.ok(todo).build();
         }
 
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(todo).build();
@@ -152,7 +130,7 @@ public class TodoResource {
 
         // Retrieve the todo that you will need to change
         Customer retrievedTodo = TodoService.customerObject(id);
-        todo = new Customer();      //for testing purposes only
+
         if(retrievedTodo == null) {
             //If not found then respond with a 404 response.
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -201,7 +179,7 @@ public class TodoResource {
     public Response deleteTodo(@PathParam("id") int id) {
 
         //Retrieve the todo_object that you want to delete.
-        OrderDetails retrievedOrderDetails = TodoService.deleteObject(id);
+        Customer retrievedOrderDetails = TodoService.customerObject(id);
 
         if(retrievedOrderDetails == null) {
             //If not found throw a 404

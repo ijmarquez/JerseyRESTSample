@@ -27,6 +27,10 @@ public class Customer {
 
     String deliveryType;
     String itemPurchase;
+
+    String itemSize;
+    int quantity;
+    double unitPrice;
     double total;
 
     public void setId(int id) { this.id = id;}
@@ -51,6 +55,10 @@ public class Customer {
 
     public void setDeliveryType(String deliveryType) { this.deliveryType = deliveryType; }
     public void setItemPurchase(String itemPurchase) { this.itemPurchase = itemPurchase; }
+
+    public void setItemSize (String itemSize) { this.itemSize = itemSize; }
+    public void setQuantity (int quantity) { this.quantity = quantity; }
+    public void setUnitPrice (double unitPrice) { this.unitPrice = unitPrice; }
     public void setTotal(double total) { this.total = total; }
 
     public int getId() { return this.id; }
@@ -75,5 +83,9 @@ public class Customer {
 
     public String getDeliveryType() { return deliveryType; }
     public String getItemPurchase() { return itemPurchase; }
+
+    public String getItemSize() { return this.itemSize; }
+    public int getQuantity() { return this.quantity; }
+    public double getUnitPrice() { return this.unitPrice; }
     public double getTotal() {return this.total; }
 }
