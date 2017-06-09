@@ -226,6 +226,47 @@ public class TodoService {
         return updateStatus;
     }
     //END of DELETE section
+
+    //POST section
+    public static boolean addCustomer(Customer customer) {
+
+        String sql = "INSERT INTO Customer (" +
+                "firstName, lastName, emailAddress, phoneNumber, " +
+                "ccType, creditCardNumber,ccExpire, " +
+                "billAddress, billCity, billState, billZipCode, " +
+                "shipAddress, shipCity, shipState, shipZipCode, " +
+                "deliveryType ) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        Connection connection = DatabaseConnector.getConnection();
+        return DatabaseUtils.performDBUpdate(connection, sql,
+                customer.getFirstName(),
+                customer.getLastName(),
+                customer.getEmailAddress(),
+
+                customer.getPhoneNumber(),
+                customer.getCcType(),
+                customer.getCcNumber(),
+                customer.getCcExpire(),
+
+                customer.getBillAddress(),
+                customer.getBillCity(),
+                customer.getBillState(),
+                Integer.toString(customer.getBillZipCode()),
+
+                customer.getShipAddress(),
+                customer.getShipCity(),
+                customer.getShipState(),
+                Integer.toString(customer.getShipZipCode()),
+                customer.getDeliveryType());
+
+    }
+
+
+
+
+
+
 }
 
 //public class TodoService {
