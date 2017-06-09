@@ -27,6 +27,7 @@ public class Customer {
 
     String deliveryType;
     String itemPurchase;
+    double total;
 
     public void setId(int id) { this.id = id;}
     public void setFirstName(String firstName) { this.firstName = firstName; }
@@ -50,6 +51,7 @@ public class Customer {
 
     public void setDeliveryType(String deliveryType) { this.deliveryType = deliveryType; }
     public void setItemPurchase(String itemPurchase) { this.itemPurchase = itemPurchase; }
+    public void setTotal(double total) { this.total = total; }
 
     public int getId() { return this.id; }
     public String getFirstName() { return firstName; }
@@ -73,4 +75,5 @@ public class Customer {
 
     public String getDeliveryType() { return deliveryType; }
     public String getItemPurchase() { return itemPurchase; }
+    public double getTotal() {return this.total; }
 }

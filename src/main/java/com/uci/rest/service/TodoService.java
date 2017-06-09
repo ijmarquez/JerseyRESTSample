@@ -94,16 +94,53 @@ public class TodoService {
     }
 
 
-//    // use to add customer info into db
-//    public static boolean AddNewCustomer(Todo todo) {
-//
-//        String sql = "INSERT INTO TODOS  (TODO_SUMMARY, TODO_DESC)" +
-//                "VALUES (?, ?)";
-//        Connection connection = DatabaseConnector.getConnection();
-//        return DatabaseUtils.performDBUpdate(connection, sql, todo.getSummary(), todo.getDescription());
-//
-//    }
-//
+    // use to add customer info into db
+    //POST section
+    public static boolean AddNewCustomer(Customer todo) {
+
+        String sql = "INSERT INTO Customer (firstName, lastName, emailAddress, phoneNumber, ccType, creditCardNumber, ccExpire, billAddress, billCity, billState, billZipCode, shipAddress, shipCity, shipState, shipZipCode, itemPurchase, total) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+
+        Connection connection = DatabaseConnector.getConnection();
+        boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql,
+                todo.getFirstName(), todo.getLastName(), todo.getEmailAddress(), todo.getPhoneNumber(),
+                todo.getCcType(), todo.getCcNumber(), todo.getCcExpire(),
+                todo.getBillAddress(), todo.getBillCity(), todo.getBillState(), String.valueOf(todo.getBillZipCode()),
+                todo.getShipAddress(), todo.getShipCity(), todo.getShipState(), String.valueOf(todo.getShipZipCode()),
+                todo.getItemPurchase(), String.valueOf(todo.getTotal()));
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return updateStatus;
+    }
+
+    public static boolean addItemToOrder(Customer todo) {
+
+        String sql = "INSERT INTO OrderDetails (orderId, productId, itemSize, unitPrice, quantity, total)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+
+        Connection connection = DatabaseConnector.getConnection();
+        boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql,
+                todo.getFirstName(), todo.getLastName(), todo.getEmailAddress(), todo.getPhoneNumber(),
+                todo.getCcType(), todo.getCcNumber(), todo.getCcExpire(),
+                todo.getBillAddress(), todo.getBillCity(), todo.getBillState(), String.valueOf(todo.getBillZipCode()),
+                todo.getShipAddress(), todo.getShipCity(), todo.getShipState(), String.valueOf(todo.getShipZipCode()),
+                todo.getItemPurchase(), String.valueOf(todo.getTotal()));
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return updateStatus;
+    }
+    //END POST section
+
     //PUT section
     public static Customer customerObject(int id) {
 

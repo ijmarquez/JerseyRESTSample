@@ -6,6 +6,7 @@ import com.uci.rest.service.TodoService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -54,39 +55,93 @@ public class TodoResource {
 
     //This method represents an endpoint with the URL /todos and a POST request.
     // Since there is no @PathParam mentioned, the /todos as a relative path and a POST request will invoke this method.
-//    @POST
-//    @Consumes({MediaType.APPLICATION_JSON}) //This method accepts a request of the JSON type
-//    public Response addTodo(Todo todo) {
-//
-//        //The todo object here is automatically constructed from the json request. Jersey is so cool!
-//        if(TodoService.AddTodo(todo)) {
-//            return Response.ok().entity("TODO Added Successfully").build();
-//        }
-//
-//        // Return an Internal Server error because something wrong happened. This should never be executed
-//        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-//
-//
-//    }
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON}) //This method accepts a request of the JSON type
+    public Response addTodo(Customer todo) {
 
-    //Similar to the method above.
-//    @POST
-//    @Consumes({MediaType.APPLICATION_FORM_URLENCODED}) //This method accepts form parameters.
-//    //If you were to send a POST through a form submit, this method would be called.
-//    public Response addTodo(@FormParam("summary") String summary,
-//                            @FormParam("description") String description) {
-//        Todo todo = new Todo();
-//        todo.setSummary(summary);
-//        todo.setDescription(description);
-//
-//        System.out.println(todo);
-//
-//        if(TodoService.AddTodo(todo)) {
-//            return Response.ok().entity("TODO Added Successfully").build();
+        //The todo object here is automatically constructed from the json request. Jersey is so cool!
+        if(TodoService.AddNewCustomer(todo)) {
+            return Response.ok().entity("TODO Added Successfully").build();
+        }
+
+        // Return an Internal Server error because something wrong happened. This should never be executed
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+
+
+    }
+
+//    Similar to the method above.
+    @POST
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED}) //This method accepts form parameters.
+    //If you were to send a POST through a form submit, this method would be called.
+    public Response addTodo(@FormParam("firstName") String firstName,
+                            @FormParam("lastName") String lastName,
+                            @FormParam("emailAddress") String emailAddress,
+                            @FormParam("phoneArea") String phoneArea,
+                            @FormParam("phoneThree") String phoneThree,
+                            @FormParam("phoneFour") String phoneFour,
+                            @FormParam("ccType") String ccType,
+                            @FormParam("creditCardNumber") String creditCardNumber,
+                            @FormParam("ccExpire") String ccExpire,
+                            @FormParam("billAddress") String billAddress,
+                            @FormParam("billCity") String billCity,
+                            @FormParam("billState") String billState,
+                            @FormParam("billZipCode") String billZipCode,
+                            @FormParam("shipAddress") String shipAddress,
+                            @FormParam("shipCity") String shipCity,
+                            @FormParam("shipState") String shipState,
+                            @FormParam("shipZipCode") String shipZipCode,
+                            @FormParam("total") String total){
+        Customer todo = new Customer();
+
+        todo.setFirstName(firstName);
+        todo.setLastName(lastName);
+        todo.setEmailAddress(emailAddress);
+        todo.setPhoneNumber(phoneArea+phoneThree+phoneFour);
+
+        todo.setCcType(ccType);
+        todo.setCcNumber(creditCardNumber);
+        todo.setCcExpire(ccExpire);
+
+        todo.setBillAddress(billAddress);
+        todo.setBillCity(billCity);
+        todo.setBillState(billState);
+        todo.setBillZipCode(Integer.parseInt(billZipCode));
+
+        todo.setShipAddress(shipAddress);
+        todo.setShipCity(shipCity);
+        todo.setShipState(shipState);
+        todo.setShipZipCode(Integer.parseInt(shipZipCode));
+
+        todo.setItemPurchase(firstName+lastName);
+        todo.setTotal(Double.parseDouble(total));
+
+        System.out.println(todo);
+
+//        if(todo != null) {
+//            return  Response.ok().entity("firstName: "+ todo.getFirstName() + "\n lastName: " + todo.getLastName() +
+//                    "\n emailAddress: " + todo.getEmailAddress() + "\n setPhoneNumber: "+ todo.getPhoneNumber() +
+//                    "\n setCcType: " + todo.getCcType() + "\n creditCardNumber: " + todo.getCcNumber() +
+//                    "\n billAddress: "+ todo.getBillAddress() + "\n billCity: " + todo.getBillCity() +
+//                    "\n billState: "+ todo.getBillState() + "\n billZipCode: " + String.valueOf(todo.getBillZipCode()) +
+//                    "\n shipAddress: "+ todo.getShipAddress() + "\n shipCity: " + todo.getShipCity() +
+//                    "\n shipState: "+ todo.getShipState() + "\n shipZipCode: " + String.valueOf(todo.getShipZipCode()) +
+//                    "\n itemPurchase: "+ todo.getItemPurchase() + "\n total: " + String.valueOf(todo.getTotal())).build();
 //        }
-//
-//        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-//    }
+        if(TodoService.AddNewCustomer(todo)) {
+            java.net.URI location = null;
+            try {
+                location = new java.net.URI("../../../pa3/OrderDetails");
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            return Response.temporaryRedirect(location).build();
+//            return Response.ok().entity("TODO Added Successfully").build();
+//            return Response.ok(todo).build();
+        }
+
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(todo).build();
+    }
 
     //This method represents a PUT request where the id is provided as a path parameter and the request body is provided in JSON
     @PUT
