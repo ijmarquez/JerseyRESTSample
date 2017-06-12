@@ -3,10 +3,7 @@ package com.uci.rest.service;
 
 import com.uci.rest.db.DatabaseConnector;
 import com.uci.rest.db.DatabaseUtils;
-import com.uci.rest.model.Customer;
-import com.uci.rest.model.ItemList;
-import com.uci.rest.model.MainList;
-import com.uci.rest.model.OrderDetails;
+import com.uci.rest.model.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,17 +11,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by tariqibrahim on 5/28/17.
- */
-
 public class TodoService {
 
 
     private final static String ALL_PRODUCTS_QUERY = "SELECT * FROM MainProduct";
     private final static String SINGLE_ITEM_INFO = "SELECT * FROM `MainProduct`,`Product`WHERE MainProduct.ID = Product.ID && MainProduct.generalName = \"";
-//    private final static String DELETE_ORDER_DETAILS = "SELECT * FROM `OrderDetails` WHERE OrderDetails.id = 23";
 
+    //GET section
     // use for displaying item detail
     public static List<ItemList> getTodoById(String generalName) {
         List<ItemList> todos = new ArrayList<ItemList>();
@@ -77,7 +70,6 @@ public class TodoService {
                     todo.setCost(resultSet.getString("cost"));
 
                     todos.add(todo);
-
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -92,19 +84,36 @@ public class TodoService {
 
         return todos;
     }
+    //END GET section
+
+    //POST section
+    // use to add customer info into db
+    public static boolean AddNewCustomer(Customer todo) {
+
+        String sql = "INSERT INTO Customer (firstName, lastName, emailAddress, phoneNumber, ccType, creditCardNumber, ccExpire, billAddress, billCity, billState, billZipCode, shipAddress, shipCity, shipState, shipZipCode, itemPurchase, itemSize, quantity, unitPrice, total) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 
-//    // use to add customer info into db
-//    public static boolean AddNewCustomer(Todo todo) {
-//
-//        String sql = "INSERT INTO TODOS  (TODO_SUMMARY, TODO_DESC)" +
-//                "VALUES (?, ?)";
-//        Connection connection = DatabaseConnector.getConnection();
-//        return DatabaseUtils.performDBUpdate(connection, sql, todo.getSummary(), todo.getDescription());
-//
-//    }
-//
+        Connection connection = DatabaseConnector.getConnection();
+        boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql,
+                todo.getFirstName(), todo.getLastName(), todo.getEmailAddress(), todo.getPhoneNumber(),
+                todo.getCcType(), todo.getCcNumber(), todo.getCcExpire(),
+                todo.getBillAddress(), todo.getBillCity(), todo.getBillState(), String.valueOf(todo.getBillZipCode()),
+                todo.getShipAddress(), todo.getShipCity(), todo.getShipState(), String.valueOf(todo.getShipZipCode()),
+                todo.getItemPurchase(), todo.getItemSize(), String.valueOf(todo.getQuantity()),
+                String.valueOf(todo.getUnitPrice()), String.valueOf(todo.getTotal()));
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return updateStatus;
+    }
+    //END POST section
+
     //PUT section
+    //get info from DB and store it to a Customer object
     public static Customer customerObject(int id) {
 
         String CustomerDetails = "SELECT * FROM Customer WHERE Customer.id = "+id;
@@ -138,6 +147,9 @@ public class TodoService {
 
                     customer.setDeliveryType(resultSet.getString("deliveryType"));
                     customer.setItemPurchase(resultSet.getString("itemPurchase"));
+                    customer.setItemSize(resultSet.getString("itemSize"));
+                    customer.setQuantity(resultSet.getInt("quantity"));
+                    customer.setUnitPrice(resultSet.getDouble("unitPrice"));
 
                     return customer;
                 }
@@ -155,6 +167,7 @@ public class TodoService {
         return null;
     }
 
+    //method that updates Customer information if different from DB
     public static boolean updateTodo(Customer todo) {
 
         String sql = "UPDATE Customer SET firstName=?, lastName=?, emailAddress=?, phoneNumber=?, ccType=?, creditCardNumber=?, " +
@@ -177,44 +190,11 @@ public class TodoService {
 
 
     //DELETE section
-    public static OrderDetails deleteObject(int id) {
+    //Uses PUT Section CustomerObject method to create an object of the customer if it exist in the DB
+    //delete customer information by ID
+    public static boolean deleteTodo(Customer retrieveOrderDetail) {
 
-        String DELETE_ORDER_DETAILS = "SELECT * FROM OrderDetails WHERE OrderDetails.id = "+id;
-        Connection connection = DatabaseConnector.getConnection();
-        ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, DELETE_ORDER_DETAILS);
-
-        if (resultSet != null) {
-            try {
-                while (resultSet.next()) {
-                    OrderDetails orderDetails = new OrderDetails();
-
-                    orderDetails.setId(resultSet.getInt("id"));
-                    orderDetails.setOrderId(resultSet.getString("orderId"));
-                    orderDetails.setProductId(resultSet.getString("productId"));
-                    orderDetails.setItemSize(resultSet.getString("itemSize"));
-                    orderDetails.setUnitPrice(resultSet.getDouble("unitPrice"));
-                    orderDetails.setQuantity(resultSet.getInt("quantity"));
-                    orderDetails.setTotal(resultSet.getDouble("total"));
-
-                    return orderDetails;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    // We will always close the connection once we are done interacting with the Database.
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
-
-    public static boolean deleteTodo(OrderDetails retrieveOrderDetail) {
-
-        String sql = "DELETE FROM OrderDetails WHERE id = ?;";
+        String sql = "DELETE FROM Customer WHERE ID = ?;";
         Connection connection = DatabaseConnector.getConnection();
         boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql, String.valueOf(retrieveOrderDetail.getId()));
 
@@ -268,125 +248,4 @@ public class TodoService {
 
 
 }
-
-//public class TodoService {
-
-//
-//    private final static String ALL_TODOS_QUERY = "SELECT * FROM TODOS";
-//
-//    public static Todo getTodoById(int id) {
-//        //Get a new connection object before going forward with the JDBC invocation.
-//        Connection connection = DatabaseConnector.getConnection();
-//        ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_TODOS_QUERY + " WHERE TODO_ID = " + id);
-//
-//        if (resultSet != null) {
-//            try {
-//                while (resultSet.next()) {
-//                    Todo todo = new Todo();
-//
-//
-//                    todo.setId(resultSet.getInt("TODO_ID"));
-//                    todo.setDescription(resultSet.getString("TODO_DESC"));
-//                    todo.setSummary(resultSet.getString("TODO_SUMMARY"));
-//
-//                    return todo;
-//
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            } finally {
-//                try {
-//
-//                    // We will always close the connection once we are done interacting with the Database.
-//                    connection.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//
-//        return null;
-//
-//
-//    }
-//
-//    public static List<Todo> getAllTodos() {
-//        List<Todo> todos = new ArrayList<Todo>();
-//
-//        Connection connection = DatabaseConnector.getConnection();
-//        ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_TODOS_QUERY);
-//
-//        if (resultSet != null) {
-//            try {
-//                while (resultSet.next()) {
-//                    Todo todo = new Todo();
-//
-//                    todo.setId(resultSet.getInt("TODO_ID"));
-//                    todo.setDescription(resultSet.getString("TODO_DESC"));
-//                    todo.setSummary(resultSet.getString("TODO_SUMMARY"));
-//
-//                    todos.add(todo);
-//
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            } finally {
-//                try {
-//                    connection.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//
-//        return todos;
-//    }
-//
-//    public static boolean AddTodo(Todo todo) {
-//
-//        String sql = "INSERT INTO TODOS  (TODO_SUMMARY, TODO_DESC)" +
-//                "VALUES (?, ?)";
-//        Connection connection = DatabaseConnector.getConnection();
-//        return DatabaseUtils.performDBUpdate(connection, sql, todo.getSummary(), todo.getDescription());
-//
-//    }
-//
-//    public static boolean updateTodo(Todo todo) {
-//
-//        String sql = "UPDATE TODOS SET TODO_SUMMARY=?, TODO_DESC=? WHERE TODO_ID=?;";
-//
-//        Connection connection = DatabaseConnector.getConnection();
-//
-//        boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql, todo.getSummary(), todo.getDescription(),
-//                String.valueOf(todo.getId()));
-//
-//        try {
-//            connection.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return updateStatus;
-//
-//    }
-//
-//    public static boolean deleteTodo(Todo retrievedTodo) {
-//
-//        String sql = "DELETE FROM TODOS WHERE TODO_ID=?;";
-//
-//        Connection connection = DatabaseConnector.getConnection();
-//
-//        boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql, String.valueOf(retrievedTodo.getId()));
-//
-//        try {
-//            connection.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return updateStatus;
-//    }
-//}
-
-/**************************/
 

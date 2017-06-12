@@ -36,8 +36,6 @@ public class DatabaseUtils {
         }
 
         return null;
-
-
     }
 
     public static boolean performDBUpdate(Connection connection, String sql, String... params) {
@@ -46,12 +44,9 @@ public class DatabaseUtils {
         try {
             preparedStatement = connection.prepareStatement(sql);
 
-
             int i = 1;
             for (String param : params) {
-
                 preparedStatement.setString(i++, param);
-
             }
 
             return preparedStatement.executeUpdate() > 0 ;
