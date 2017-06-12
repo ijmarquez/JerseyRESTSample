@@ -121,6 +121,72 @@ public class TodoResource {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(todo).build();
     }
 
+    @POST
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED}) //This method accepts form parameters.
+    //If you were to send a POST through a form submit, this method would be called.
+    public Response addCustomer(
+            @FormParam("firstName") String firstName,
+            @FormParam("lastName") String lastName,
+            @FormParam("emailAddress") String emailAddress,
+
+            @FormParam("phoneArea")  String phoneArea,
+            @FormParam("phoneThree") String phoneThree,
+            @FormParam("phoneFour") String phoneFour,
+
+            @FormParam("ccType") String ccType,
+            @FormParam("creditCardNumber") String creditCardNumber,
+            @FormParam("ccExpire") String ccExpire,
+
+            @FormParam("billAddress") String billAddress,
+            @FormParam("billCity") String billCity,
+            @FormParam("billState") String billState,
+            @FormParam("billZipCode") int billZipCode,
+
+            @FormParam("shipAddress") String shipAddress,
+            @FormParam("shipCity") String shipCity,
+            @FormParam("shipState") String shipState,
+            @FormParam("shipZipCode") int shipZipCode,
+            @FormParam("deliveryType") String deliveryType)
+    {
+        Customer customer = new Customer();
+
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setEmailAddress(emailAddress);
+        //customer.setPhoneNumber(phoneArea, phoneThree, phoneFour);
+        customer.setPhoneNumber("1234567890");
+
+        customer.setCcType(ccType);
+        customer.setCcNumber(creditCardNumber);
+        customer.setCcExpire(ccExpire);
+
+        customer.setBillAddress(billAddress);
+        customer.setBillCity(billCity);
+        customer.setBillState(billState);
+        customer.setBillZipCode(billZipCode);
+
+        customer.setShipAddress(shipAddress);
+        customer.setShipCity(shipCity);
+        customer.setShipState(shipState);
+        customer.setShipZipCode(shipZipCode);
+        customer.setDeliveryType(deliveryType);
+
+        System.out.println(customer);
+
+        if(TodoService.addCustomer(customer)) {
+            return Response.ok().entity("Customer Added Successfully").build();
+        }
+
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    }
+
+
+
+
+
+
+
+
     //This method represents a PUT request where the id is provided as a path parameter and the request body is provided in JSON
     @PUT
     @Path("{id}")

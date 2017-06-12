@@ -1,0 +1,296 @@
+{
+	"variables": [],
+	"info": {
+		"name": "TODO RESTService calls",
+		"_postman_id": "0416618a-2c63-f5d0-f965-61f01fb5e8b2",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET ALL items",
+			"request": {
+				"url": "http://andromeda-64.ics.uci.edu:5064/jerseyrest/v1/api/todos",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "summary",
+							"value": "Practice",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Practice Routines",
+							"type": "text"
+						}
+					]
+				},
+				"description": "This request is used to Get All the Todos in the database.\n\nThis provides the response in JSON format"
+			},
+			"response": []
+		},
+		{
+			"name": "GET TODO By same general items",
+			"request": {
+				"url": "http://andromeda-64.ics.uci.edu:5064/jerseyrest/v1/api/todos/Men's Plain T-Shirt",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "summary",
+							"value": "Practice",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Practice Routines",
+							"type": "text"
+						}
+					]
+				},
+				"description": "This Get request is used to get a particular TODO item.\n\nThis request has a path parameter which is the id at the end of the path."
+			},
+			"response": []
+		},
+		{
+			"name": "POST add customer to DB (URL-FORM-ENCODED Request)",
+			"request": {
+				"url": "http://andromeda-64.ics.uci.edu:5064/jerseyrest/v1/api/todos",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "firstName",
+							"value": "first",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "last",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "emailAddress",
+							"value": "something@gmail.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "phoneArea",
+							"value": "123",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "phoneThree",
+							"value": "456",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "phoneFour",
+							"value": "7890",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "ccType",
+							"value": "AMEX",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "creditCardNumber",
+							"value": "3456345634563456",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "ccExpire",
+							"value": "11/23",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "billAddress",
+							"value": "123 street",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "billCity",
+							"value": "City",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "billState",
+							"value": "bs",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "billZipCode",
+							"value": "11111",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "shipAddress",
+							"value": "123 street",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "shipCity",
+							"value": "City",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "shipState",
+							"value": "bs",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "shipZipCode",
+							"value": "11111",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "itemName",
+							"value": "Women Racer Back Tank Orange",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "itemSize",
+							"value": "XXSmall",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "unitPrice",
+							"value": "10.00",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "total",
+							"value": "30.00",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": "This is another variant of the post call that uses a request format of an HTML form.\n\nThis request simulates a submit from a Form"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT edit customer info",
+			"request": {
+				"url": "http://andromeda-64.ics.uci.edu:5064/jerseyrest/v1/api/todos/146",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"firstName\":\"change\", \n\"lastName\":\"last\", \n\"emailAddress\":\"something@gmail\", \n\"phoneNumber\":\"1234567890\", \n\"ccType\":\"AMEX\", \n\"ccNumber\":\"1234567812345678\", \n\"ccExpire\":\"11/23\", \n\"billAddress\":\"123 street\", \n\"billCity\":\"City\", \n\"billState\":\"bs\", \n\"billZipCode\":\"11111\", \n\"shipAddress\":\"123 street\", \n\"shipCity\":\"City\", \n\"shipState\":\"bs\", \n\"shipZipCode\":\"11111\", \n\"deliveryType\":\"null\", \n\"itemPurchase\":\"Some Shirt\", \n\"itemSize\":\"XXSmall\", \n\"quantity\":\"3\", \n\"unitPrice\":\"10.00\", \n\"total\":\"100.00\"\n  }"
+				},
+				"description": "This call is used to Update an existing TODO item\n\nIt accepts a request body in JSON\n\nIt also has a path paramter which is the id of the TODO item."
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE customer by ID",
+			"request": {
+				"url": "http://andromeda-64.ics.uci.edu:5064/jerseyrest/v1/api/todos/44",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "This request will be used to delete a particular TODO item by its id.\n\nThe id is the path parameter of this service"
+			},
+			"response": []
+		}
+	]
+}

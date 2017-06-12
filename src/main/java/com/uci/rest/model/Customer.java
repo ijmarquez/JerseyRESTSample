@@ -26,7 +26,14 @@ public class Customer {
     int shipZipCode;
 
     String deliveryType;
+
     String itemPurchase;
+    String itemSize;
+    int    quantity;
+    double unitPrice;
+    double tax;
+    double taxTotal;
+    double total;
 
     String itemSize;
     int quantity;
@@ -83,7 +90,7 @@ public class Customer {
 
     public String getDeliveryType() { return deliveryType; }
     public String getItemPurchase() { return itemPurchase; }
-
+  
     public String getItemSize() { return this.itemSize; }
     public int getQuantity() { return this.quantity; }
     public double getUnitPrice() { return this.unitPrice; }
