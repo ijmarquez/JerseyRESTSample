@@ -29,13 +29,6 @@ public class Customer {
 
     String itemPurchase;
     String itemSize;
-    int    quantity;
-    double unitPrice;
-    double tax;
-    double taxTotal;
-    double total;
-
-    String itemSize;
     int quantity;
     double unitPrice;
     double total;
