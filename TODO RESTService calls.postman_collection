@@ -10,7 +10,7 @@
 		{
 			"name": "GET ALL items",
 			"request": {
-				"url": "http://andromeda-64.ics.uci.edu:5064/jerseyrest/v1/api/todos",
+				"url": "http://andromeda-74.ics.uci.edu:5074/jerseyrest/v1/api/todos",
 				"method": "GET",
 				"header": [
 					{
@@ -47,7 +47,7 @@
 		{
 			"name": "GET TODO By same general items",
 			"request": {
-				"url": "http://andromeda-64.ics.uci.edu:5064/jerseyrest/v1/api/todos/Men's Plain T-Shirt",
+				"url": "http://andromeda-74.ics.uci.edu:5074/jerseyrest/v1/api/todos/Men's Plain T-Shirt",
 				"method": "GET",
 				"header": [
 					{
@@ -84,7 +84,7 @@
 		{
 			"name": "POST add customer to DB (URL-FORM-ENCODED Request)",
 			"request": {
-				"url": "http://andromeda-64.ics.uci.edu:5064/jerseyrest/v1/api/todos",
+				"url": "http://andromeda-74.ics.uci.edu:5074/jerseyrest/v1/api/todos",
 				"method": "POST",
 				"header": [
 					{
@@ -243,7 +243,7 @@
 		{
 			"name": "PUT edit customer info",
 			"request": {
-				"url": "http://andromeda-64.ics.uci.edu:5064/jerseyrest/v1/api/todos/146",
+				"url": "http://andromeda-74.ics.uci.edu:5074/jerseyrest/v1/api/todos/146",
 				"method": "PUT",
 				"header": [
 					{
@@ -269,7 +269,7 @@
 		{
 			"name": "DELETE customer by ID",
 			"request": {
-				"url": "http://andromeda-64.ics.uci.edu:5064/jerseyrest/v1/api/todos/44",
+				"url": "http://andromeda-74.ics.uci.edu:5074/jerseyrest/v1/api/todos/44",
 				"method": "DELETE",
 				"header": [
 					{
