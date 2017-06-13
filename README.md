@@ -2,7 +2,7 @@ PA4: Building a web application using JSP and RESTful web services
 
 GROUP MEMBERS: Calvin Poon and Irish Marquez
 
-URL: http://andromeda-64.ics.uci.edu:5064/pa3/home
+URL: http://andromeda-74.ics.uci.edu:5074/pa3/home
 
 CLIENT FILES ARE IN: pa3.war and PA4_Client
        
@@ -15,7 +15,7 @@ JSP IMPLEMENTATION
 
 JSP is implemented on the product list page. 
 
-URL: http://andromeda-64.ics.uci.edu:5064/pa3/itemsList.jsp
+URL: http://andromeda-74.ics.uci.edu:5074/pa3/itemsList.jsp
 
 War file: pa3.war
 
